@@ -92,15 +92,29 @@ function setup_bluetooth(bt) {
     // document.getElementById('devname').innerHTML = deviceName;
     console.log("Connected: " + deviceName);
     console.log("id: " + this.bluetoothDevice.id);
+
+    let idx = getBTIndex(this); //btdevs.length - 1;
+    html = "<td>" + deviceName + "</td>";
+    html += "<td id=\"btid" + idx + "\">Reading...</td><td id=\"btsts" + idx + "\"></td>"
+    document.getElementById('bt'+idx).innerHTML = html;
   }
 
   // onRead
   bt.onRead = function(data, uuid) {
+    let bt = this;
+    var idx = getBTIndex(bt);
+
+    switch(uuid) {
+      case 'Major': onReadMajor(idx, data); break;
+      case 'Minor': onReadMinor(idx, data); break;
+      default:      break;
+    }
+
     var val = uuid + ": ";
     for (var i=0; i<data.byteLength; i++) {
       value = data.getUint8(i);
+      if (i > 0) val += ',';
       val += value;
-      val += ','
     }
     // document.getElementById("text1").innerHTML = val;
     console.log(val);

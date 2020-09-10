@@ -6,6 +6,11 @@
 <script type="text/javascript" src="js/bluejelly.js"></script>
 <script type="text/javascript" src="js/bj-plato.js"></script>
 <script type="text/javascript" src="js/plato-web.js"></script>
+<style type="text/css">
+td {
+  text-align: center;
+}
+</style>
 </head>
 <body>
 <div>
@@ -14,13 +19,16 @@
     <tr>
       <th>Device name</th>
       <th>ID</th>
-      <th>Address</th>
+      <!-- <th>Address</th> -->
       <th>Status</th>
     </tr>
+    <tr id="bt0"></tr>
+    <tr id="bt1"></tr>
+    <tr id="bt2"></tr>
   </table>
   <button id="bt_scan" onclick="scanDevice()">Scan</button>
-  <button onclick="btdevs[0].read('Major')">Major[0]</button>
-  <button onclick="btdevs[1].read('Major')">Major[1]</button>
+  <button onclick="btdevs[0].bt.read('Major')">Major[0]</button>
+  <button onclick="btdevs[1].bt.read('Major')">Major[1]</button>
 </div>
 
 <div id="text1">Hello, Plato!</div>
