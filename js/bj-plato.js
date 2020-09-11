@@ -33,6 +33,65 @@ function trans_mrb(bt, seq) {
   console.log(seq + ": " + mrbbuf);
 }
 
+// Transfer application binary to BT device
+function trans_appbin(idx) {
+  let btdev = btdevs[idx];
+  let seq = btdev.wrtseq;
+
+  showProgress(idx);
+
+  if (seq >= mrbbin.byteLength / mrb_chunk_size) {
+    btdev.wrtseq = -1;
+    let buf = [0x07, 0x70, 0x61, 0x73, 0x73, 0x00];
+    bt.write("WriteApp", buf);
+    console.log("Transfer completed. idx=" + idx);
+    return;
+  }
+
+  var binbuf = [0x06, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  binbuf[1] = Math.floor(seq / 256);
+  binbuf[2] = seq % 256;
+
+  for (var i=0; i<mrb_chunk_size; i++) {
+    binbuf[mrb_chunk_start + i] = mrbbin[seq * mrb_chunk_size + i];
+  }
+  btdev.bt.write("WriteApp", binbuf);
+  // document.getElementById("bin").innerHTML = seq + ": " + mrbbuf;
+  console.log(idx + ": " + seq + ": " + binbuf);
+}
+
+// Show transfer progress
+function showProgress(idx) {
+  let btdev = btdevs[idx];
+  var per = Math.round(100.0 * (mrb_chunk_size * btdev.wrtseq) / mrbbin.byteLength);
+  var sts = (per >= 100.0) ? "Completed" : ("Writing... (" + per + "%)");
+  document.getElementById("btsts" + idx).innerText = sts;
+}
+
+// Write application binary to BT devices
+function writeAppl() {
+  for (var i=0; i<btdevs.length; i++) {
+    btdevs[i].wrtseq = 0;
+    showProgress(i);
+    trans_appbin(i);
+  }
+}
+
+// load_appbin(file)
+// Load application binary
+//  file: bin file (which include mrb files)
+function load_appbin(file) {
+  let mrbreader = new FileReader();
+  mrbbin = null;
+  mrbreader.onload = function() {
+    // initialize sequence number
+    wrtseq = 0;
+    mrbbin = new Uint8Array(mrbreader.result);
+    document.getElementById("load_status").innerText = "loaded.";
+  }
+  mrbreader.readAsArrayBuffer(file);
+}
+
 // start_trans_mrb(bt, file)
 // Start transfer mrb file
 //  bt:   Instance of BlueJelly
@@ -122,9 +181,16 @@ function setup_bluetooth(bt) {
 
   // onWrite
   bt.onWrite = function(uuid) {
-    if (uuid == "WriteApp" && wrtseq >= 0) {
-      wrtseq++;
-      trans_mrb(this, wrtseq);
+    // if (uuid == "WriteApp" && wrtseq >= 0) {
+    //   wrtseq++;
+    //   trans_mrb(this, wrtseq);
+    // }
+    if (uuid == "WriteApp") {
+      let idx = getBTIndex(this);
+      let btdev = btdevs[idx];
+      if (btdev.wrtseq < 0) return;
+      btdev.wrtseq++;
+      trans_appbin(idx);
     }
   }
 

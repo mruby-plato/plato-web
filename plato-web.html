@@ -25,10 +25,26 @@ td {
     <tr id="bt0"></tr>
     <tr id="bt1"></tr>
     <tr id="bt2"></tr>
+    <tr id="bt3"></tr>
+    <tr id="bt4"></tr>
+    <tr id="bt5"></tr>
+    <tr id="bt6"></tr>
+    <tr id="bt7"></tr>
+    <tr id="bt8"></tr>
+    <tr id="bt9"></tr>
   </table>
-  <button id="bt_scan" onclick="scanDevice()">Scan</button>
-  <button onclick="btdevs[0].bt.read('Major')">Major[0]</button>
-  <button onclick="btdevs[1].bt.read('Major')">Major[1]</button>
+  <div>
+    <button id="bt_scan" onclick="scanDevice()">Scan</button>
+    <!-- <button onclick="btdevs[0].bt.read('Major')">Major[0]</button> -->
+    <!-- <button onclick="btdevs[1].bt.read('Major')">Major[1]</button> -->
+  </div>
+  <div>
+    <input type="file" id="fl_appbin">
+    <div id="load_status"></div>
+  </div>
+  <div>
+    <button id="bt_wrtapp" onclick="writeAppl()">Deploy</button>
+  </div>
 </div>
 
 <div id="text1">Hello, Plato!</div>
@@ -132,6 +148,15 @@ window.onload = function() {
   // // WRITE_APP
   // ble.setUUID("WriteApp",   "24625200-1f7e-4adb-936a-ba3687e99b18", "24625204-1f7e-4adb-936a-ba3687e99b18");
   setup_bluetooth(ble);
+
+  document.getElementById("fl_appbin").addEventListener("change", function(evt) {
+    const input = evt.target;
+    if (input.files.length == 0) {
+      alert("No file selected.");
+      return;
+    }
+    load_appbin(input.files[0]);
+  })
 }
 
 // ClickEvents
