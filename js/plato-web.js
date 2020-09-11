@@ -18,6 +18,7 @@ function hex2(val) {
   return ("0" + (new Number(val)).toString(16).toUpperCase()).slice(-2);
 }
 
+// `Scan` button handler
 // Scan BT device and get Major/Minor characteristics
 function scanDevice() {
   bt = btdevs[btdevs.length - 1].bt;
@@ -27,7 +28,16 @@ function scanDevice() {
   }
   setup_bluetooth(bt);
 
-  return (bt.scanByNamePrefix('Plato'))
+  let options = {
+    'filters': [{'namePrefix': 'Plato'}],
+    'optionalServices': [
+      "24620100-1f7e-4adb-936a-ba3687e99b18",
+      "24625200-1f7e-4adb-936a-ba3687e99b18"
+    ]
+  };
+
+  // return (bt.scanByNamePrefix('Plato'))
+  return (bt.scanWithOptions(options))
   .then( () => {
     console.log("connectGATT : Major");
     return bt.connectGATT('Major');
