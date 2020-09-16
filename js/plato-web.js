@@ -26,7 +26,7 @@ function scanDevice() {
     bt = new BlueJelly();
     btdevs.push({'bt': bt});
   }
-  setup_bluetooth(bt);
+  setup_bluetooth(bt, bt_handlers);
 
   let options = {
     'filters': [{'namePrefix': 'Plato'}],
@@ -89,9 +89,66 @@ function onReadMinor(idx, data) {
   showBTID(idx);
 }
 
+// BlueJelly.onScan handler
+function onScan(deviceName) {
+  // document.getElementById('devname').innerHTML = deviceName;
+  console.log("Connected: " + deviceName);
+  console.log("id: " + this.bluetoothDevice.id);
+
+  let idx = getBTIndex(this); //btdevs.length - 1;
+  html = "<td>" + deviceName + "</td>";
+  html += "<td id=\"btid" + idx + "\">Reading...</td><td id=\"btsts" + idx + "\"></td>"
+  document.getElementById('bt'+idx).innerHTML = html;
+}
+
+// BlueJelly.onRead handler
+function onRead(data, uuid) {
+  let bt = this;
+  var idx = getBTIndex(bt);
+
+  switch(uuid) {
+    case 'Major': onReadMajor(idx, data); break;
+    case 'Minor': onReadMinor(idx, data); break;
+    default:      break;
+  }
+
+  var val = uuid + ": ";
+  for (var i=0; i<data.byteLength; i++) {
+    value = data.getUint8(i);
+    if (i > 0) val += ',';
+    val += value;
+  }
+  // document.getElementById("text1").innerHTML = val;
+  console.log(val);
+}
+
+// BlueJelly.onWrite handler
+function onWrite(uuid) {
+  // if (uuid == "WriteApp" && wrtseq >= 0) {
+  //   wrtseq++;
+  //   trans_mrb(this, wrtseq);
+  // }
+  if (uuid == "WriteApp") {
+    let idx = getBTIndex(this);
+    let btdev = btdevs[idx];
+    if (btdev.wrtseq < 0) return;
+    btdev.wrtseq++;
+    // trans_appbin(idx);
+    window.setTimeout(function() {trans_appbin(idx)}, 100);
+  }
+}
+
 // onload event handler
 window.addEventListener("load", function() {
+  // Init BlueJelly
   setup_bluetooth(ble);
+
+  // BT event handler
+  bt_handlers = {
+    scan: onScan,
+    read: onRead,
+    write: onWrite
+  };
 
   // File selector handler
   document.getElementById("fl_appbin").addEventListener("change", function(evt) {
