@@ -88,3 +88,70 @@ function onReadMinor(idx, data) {
   btdevs[idx].minor = hex2(data.getUint8(0)) + hex2(data.getUint8(1));
   showBTID(idx);
 }
+
+// onload event handler
+window.addEventListener("load", function() {
+  setup_bluetooth(ble);
+
+  // File selector handler
+  document.getElementById("fl_appbin").addEventListener("change", function(evt) {
+    const input = evt.target;
+    if (input.files.length == 0) {
+      alert("No file selected.");
+      return;
+    }
+    load_appbin(input.files[0]);
+  })
+
+  //
+  // old ver.
+  //
+
+  // ClickEvents
+  // iBeacon Service
+  document.getElementById("bt_proximity").addEventListener("click", function(){ble.read("Proximity");});
+  document.getElementById("bt_major").addEventListener("click", function(){ble.read("Major");});
+  document.getElementById("bt_minor").addEventListener("click", function(){ble.read("Minor");});
+  document.getElementById("bt_txpwr").addEventListener("click", function(){ble.read("TXPower");});
+  document.getElementById("bt_advint").addEventListener("click", function(){ble.read("AdvIntr");});
+  document.getElementById("bt_mespwr").addEventListener("click", function(){ble.read("MesPower");});
+  document.getElementById("bt_regi").addEventListener("click", function(){
+    dt = [0x01];
+    ble.write("Register", dt);
+    ble.reset();
+    alert("Parameter updated.");
+  });
+
+  document.getElementById("bt_wrtpro").addEventListener("click", function(){
+    uuid = document.getElementById("InpProximity").value;
+    id = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    for (var i=0; i<uuid.length/2; i++) {
+      id[i] = parseInt(uuid.substr(i*2, 2), 16);
+    }
+    // alert(id);
+    ble.write("Proximity", id);
+  });
+
+  // Data Service
+  document.getElementById("button1").addEventListener("click", function(){
+    ble.read("DataNotify");
+    ble.startNotify("DataNotify");
+  });
+  document.getElementById("button2").addEventListener("click", function(){ble.stopNotify("DataNotify");});
+
+  // Device Information Service
+  document.getElementById("bt_devid").addEventListener("click", function(){ble.read("DeviceID");});
+  document.getElementById("bt_fwver").addEventListener("click", function(){ble.read("FWVer");});
+
+  // mruby Service
+  document.getElementById("bt_ledoff").addEventListener("click", function(){
+    wrtseq = -1;
+    cmd = [0x00];
+    ble.write("WriteApp", cmd);
+  });
+  document.getElementById("bt_ledon").addEventListener("click", function(){
+    wrtseq = -1;
+    cmd = [0x01];
+    ble.write("WriteApp", cmd);
+  });
+});
