@@ -6,28 +6,7 @@
 <script type="text/javascript" src="js/bluejelly.js"></script>
 <script type="text/javascript" src="js/bj-plato.js"></script>
 <script type="text/javascript" src="js/plato-web.js"></script>
-<style type="text/css">
-td {
-  text-align: center;
-}
-input[type="file"] {
-  display: none;
-}
-label {
-  background: #dddddd;
-  font-size: 0.8rem;
-  padding: 6px 8px;
-  /* display: inline-block; */
-  /* position: relative; */
-  cursor: pointer;
-  margin-right: 8px;
-  border-radius: 4px;
-  opacity: 0.8;
-}
-label:hover {
-  opacity: 1.0;
-  transition: 0.3s ease-out;
-}
+<link rel="stylesheet" href="css/plato-web.css">
 </style>
 </head>
 <body>
@@ -37,7 +16,6 @@ label:hover {
     <tr>
       <th>Device name</th>
       <th>ID</th>
-      <!-- <th>Address</th> -->
       <th>Status</th>
     </tr>
     <tr id="bt0"></tr>
@@ -53,8 +31,6 @@ label:hover {
   </table>
   <div>
     <button id="bt_scan" onclick="scanDevice()">Scan</button>
-    <!-- <button onclick="btdevs[0].bt.read('Major')">Major[0]</button> -->
-    <!-- <button onclick="btdevs[1].bt.read('Major')">Major[1]</button> -->
   </div>
   <div class="appbin_select">
     <input type="file" class="appbin_select_input" id="fl_appbin">
