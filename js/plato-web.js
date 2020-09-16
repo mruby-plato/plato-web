@@ -1,3 +1,4 @@
+// Global variables
 btdevs = [{'bt': new BlueJelly()}];
 
 // Get BT device index in `btdevs` table.
@@ -134,7 +135,7 @@ function onWrite(uuid) {
     if (btdev.wrtseq < 0) return;
     btdev.wrtseq++;
     // trans_appbin(idx);
-    window.setTimeout(function() {trans_appbin(idx)}, 100);
+    window.setTimeout(function() {trans_appbin(idx)}, mrb_write_delay);
   }
 }
 

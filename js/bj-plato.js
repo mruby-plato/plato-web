@@ -8,6 +8,7 @@ var bt_handlers = {};
 // Constants
 const mrb_chunk_start = 3;
 const mrb_chunk_size = 16;
+const mrb_write_delay = 1;  // 1ms
 
 // trans_mrb(bt, seq)
 // Transfer mrb chunk
