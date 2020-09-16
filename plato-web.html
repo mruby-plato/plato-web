@@ -10,6 +10,24 @@
 td {
   text-align: center;
 }
+input[type="file"] {
+  display: none;
+}
+label {
+  background: #dddddd;
+  font-size: 0.8rem;
+  padding: 6px 8px;
+  /* display: inline-block; */
+  /* position: relative; */
+  cursor: pointer;
+  margin-right: 8px;
+  border-radius: 4px;
+  opacity: 0.8;
+}
+label:hover {
+  opacity: 1.0;
+  transition: 0.3s ease-out;
+}
 </style>
 </head>
 <body>
@@ -38,8 +56,9 @@ td {
     <!-- <button onclick="btdevs[0].bt.read('Major')">Major[0]</button> -->
     <!-- <button onclick="btdevs[1].bt.read('Major')">Major[1]</button> -->
   </div>
-  <div>
-    <input type="file" id="fl_appbin">
+  <div class="appbin_select">
+    <input type="file" class="appbin_select_input" id="fl_appbin">
+    <label for="fl_appbin">Select appl. binary</label>
     <div id="load_status"></div>
   </div>
   <div>
