@@ -33,6 +33,7 @@ function scanDevice() {
     'filters': [{'namePrefix': 'Plato'}],
     'optionalServices': [
       "24620100-1f7e-4adb-936a-ba3687e99b18",
+      "24620300-1f7e-4adb-936a-ba3687e99b18",
       "24625200-1f7e-4adb-936a-ba3687e99b18"
     ]
   };
