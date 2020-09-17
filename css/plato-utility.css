@@ -1,0 +1,18 @@
+.bin1 {
+  width: 2em;
+}
+.bin2 {
+  width: 3em;
+}
+.bin16 {
+  width: 24em;
+}
+
+.section {
+  margin: 10px;
+  font-weight: bold;
+}
+
+table {
+  font-weight: normal;
+}
