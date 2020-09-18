@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Plato Viewer</title>
+<script type="text/javascript" src="js/bluejelly.js"></script>
+<script type="text/javascript" src="js/bj-plato.js"></script>
+<script type="text/javascript" src="js/plato-viewer.js"></script>
+<link rel="stylesheet" href="css/plato-web.css">
+<!-- c3js  -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.13/c3.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.2/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.6.13/c3.min.js"></script>
+<style type="text/css">
+#chart {
+  /* width: 1280px; */
+  height: 400px;
+  /* border: 1px solid hsl(0, 0%, 90%); */
+}
+
+/* 全体 */
+.c3 svg {
+  font-size: 1.25rem;
+}
+/* Y軸線 */
+.c3-ygrid {
+  stroke-dasharray: none;
+}
+/* グリッド線 */
+.c3-grid line {
+  stroke: #ddd;
+}
+</style>
+</head>
+<body>
+  <div>
+    <table>
+      <tr>
+        <td>Plato device:</td>
+        <td id="devname">&lt;No selection&gt;</td>
+        <td><button onclick="scanDevice()">Scan</button></td>
+      </tr>
+    </table>
+  </div>
+  <div>
+    Data Service:
+    <button id="bt_start_not" onclick="startNotify()">Start notification</button>
+    <button id="bt_stop_not" onclick="stopNotify()">Stop notification</button>
+  </div>
+
+  <div id="chart"></div>
+
+<script>
+// var chart = c3.generate({
+//   bindto: '#chart',
+//   size:{width: 1024, height: 768},
+//   data: {
+//     columns: [
+//       ['data1', 30, 200, 100, 400, 150, 250],
+//       ['data2', 50, 20, 10, 40, 15, 25],
+//       ['data3', 10, 80, 20, 70, 30, 60, 40, 50,0,0,0,0,0,0,0,0,0,0,0,0],
+//     ]
+//   }
+// });
+</script>
+
+</body>
+</html>

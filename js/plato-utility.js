@@ -13,9 +13,7 @@ const charKeys = [
   'chr_mespow'
 ];
 
-// `Scan` button handler
-// Scan BT device and get Major/Minor characteristics
-// function scanDevice() {
+// Read Plato characteristics
 function readCharacteristics(bt) {
   // Scan option
   let options = {
@@ -106,6 +104,7 @@ function showText(id, bin, bytes=1, sep="") {
   document.getElementById(id).innerText = hex;
 }
 
+// roundPrecision
 function roundPrecision(f, digits) {
   let pre = Math.pow(10, digits);
   return Math.round(f * pre) / pre;
