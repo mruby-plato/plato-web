@@ -1,18 +1,27 @@
 // Constants
-const pointids = [];
-pointids[0x04] = {time: 'Time4', data: 'Temperature'};
-pointids[0x05] = {time: 'Time5', data: 'Humidity'};
+const points = [];
 
-const points = {
-  'Time4': [],
-  'Time5': [],
-  'Temperature': [],
-  'Humidity': []
+// Initialize constant
+points[0x04] = {
+  y: {name: 'Temperature', data: []},
+  x: {name: 'Time4', data: []}
+};
+points[0x05] = {
+  y: {name: 'Humidity', data: []},
+  x: {name: 'Time5', data: []}
+};
+points[0x06] = {
+  y: {name: 'Air pressure', data: []},
+  x: {name: 'Time6', data: []}
+};
+points[0x07] = {
+  y: {name: 'Illuminance', data: []},
+  x: {name: 'Time7', data: []}
 };
 
 // Global variables
-var chart = null;
-var xsamples = 30;
+var chart = null;   // Chart object
+var xsamples = 30;  // Count of X-axis data
 
 // Convert integer to 2 digits hexadecimal string
 function hex2(val) {
@@ -112,34 +121,56 @@ function plotData(data) {
       break;
   }
 
-  // let tid = 'Time'+dtype;
-  let timeid = pointids[dtype].time;
-  let typeid = pointids[dtype].data;
-  points[timeid].push(time);
-  points[typeid].push(dval);
+  // let timeid = pointids[dtype].time;
+  // let typeid = pointids[dtype].data;
+  // points[timeid].push(time);
+  // points[typeid].push(dval);
+  points[dtype].x.data.push(time);
+  points[dtype].y.data.push(dval);
 
   var basetime = null;
-  if (points[timeid].length >= xsamples) {
-    points[timeid].shift();
-    points[typeid].shift();
-    basetime = points[timeid][0];
+  // if (points[timeid].length >= xsamples) {
+  //   points[timeid].shift();
+  //   points[typeid].shift();
+  //   basetime = points[timeid][0];
+  // }
+  if (points[dtype].x.data.length >= xsamples) {
+    points[dtype].x.data.shift();
+    points[dtype].y.data.shift();
+    basetime = points[dtype].x.data[0];
   }
   if (basetime) {
-    for(let i in pointids) {
+    // for(let i in pointids) {
+    //   if (i == dtype) continue;
+    //   if (points[pointids[i].time][0] < basetime) {
+    //     console.log('delete: time=' + points[pointids[i].time][0] + ", basetime=" + basetime);
+    //     points[pointids[i].time].shift();
+    //     points[pointids[i].data].shift();
+    //   }
+    // }
+    for(let i in points) {
       if (i == dtype) continue;
-      if (points[pointids[i].time][0] < basetime) {
-        console.log('delete: time=' + points[pointids[i].time][0] + ", basetime=" + basetime);
-        points[pointids[i].time].shift();
-        points[pointids[i].data].shift();
+      if (points[i].x.data[0] < basetime) {
+        console.log('delete: time=' + points[i].x.data[0] + ", basetime=" + basetime);
+        points[i].x.data.shift();
+        points[i].y.data.shift();
       }
     }
   }
 
   var plots = [];
-  for (var dt in points) {
-    var line = Array.from(points[dt]);
-    line.splice(0, 0, dt);
-    plots.push(line);
+  // for (var dt in points) {
+  //   var line = Array.from(points[dt]);
+  //   line.splice(0, 0, dt);
+  //   plots.push(line);
+  // }
+  for (let i in points) {
+    if (points[i].x.data.length == 0) continue;   // Skip when data empty
+    for (let dt in points[i]) {
+      var line = Array.from(points[i][dt].data);  // Set data (cloned)
+      line.splice(0, 0, points[i][dt].name);      // Set title of axis
+      plots.push(line);
+    }
   }
 
   // Show c3.js chart
@@ -212,6 +243,8 @@ window.addEventListener("load", function() {
         }
       },
       y: {
+        min: 5,
+        max: 40,
         label: {
           text: 'Temperature',
           position: 'outer-middle'
