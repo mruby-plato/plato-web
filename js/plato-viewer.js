@@ -1,5 +1,18 @@
+// Constants
+const pointids = [];
+pointids[0x04] = {time: 'Time4', data: 'Temperature'};
+pointids[0x05] = {time: 'Time5', data: 'Humidity'};
+
+const points = {
+  'Time4': [],
+  'Time5': [],
+  'Temperature': [],
+  'Humidity': []
+};
+
 // Global variables
 var chart = null;
+var xsamples = 30;
 
 // Convert integer to 2 digits hexadecimal string
 function hex2(val) {
@@ -42,6 +55,10 @@ function readCharacteristics(bt) {
   // .then( () => {return bt.dataCharacteristic.readValue();} )
   // .then( () => {return bt.connectGATT('FWVer');} )
   // .then( () => {return bt.dataCharacteristic.readValue();} )
+  .then( () => {
+    document.getElementById('bt_start_not').removeAttribute("disabled");
+    document.getElementById("bt_start_not").style.color = "black";
+  })
   .catch(error => {
     console.log('Error : ' + error);
     this.onError(error);
@@ -73,13 +90,6 @@ function onScan(deviceName) {
   document.getElementById("devname").innerText = deviceName;
 }
 
-points = {
-  'Time4': [],
-  'Time5': [],
-  'Temperature': [],
-  'Humidity': []
-};
-
 function plotData(data) {
   let dtype = data.getUint8(0);
   // let devid = hex2(data.getUint8(1)) + hex2(data.getUint8(2)) + hex2(data.getUint8(3));
@@ -87,23 +97,43 @@ function plotData(data) {
   var time = new Date();
   time.setMilliseconds(0);
 
-  var typeid = "";
+  // var typeid = "";
   var dval = 0;
   switch (dtype) {
     case 0x04:  // Temperature
-      typeid = "Temperature";
+      // typeid = "Temperature";
       dval = roundPrecision(data.getFloat32(4, true), 1);
       break;
     case 0x05:  // Humidity
-      typeid = "Humidity";
+      // typeid = "Humidity";
       dval = roundPrecision(data.getFloat32(4, true), 1);
       break;
     default:
       break;
   }
 
-  points['Time'+dtype].push(time);
+  // let tid = 'Time'+dtype;
+  let timeid = pointids[dtype].time;
+  let typeid = pointids[dtype].data;
+  points[timeid].push(time);
   points[typeid].push(dval);
+
+  var basetime = null;
+  if (points[timeid].length >= xsamples) {
+    points[timeid].shift();
+    points[typeid].shift();
+    basetime = points[timeid][0];
+  }
+  if (basetime) {
+    for(let i in pointids) {
+      if (i == dtype) continue;
+      if (points[pointids[i].time][0] < basetime) {
+        console.log('delete: time=' + points[pointids[i].time][0] + ", basetime=" + basetime);
+        points[pointids[i].time].shift();
+        points[pointids[i].data].shift();
+      }
+    }
+  }
 
   var plots = [];
   for (var dt in points) {
@@ -115,10 +145,6 @@ function plotData(data) {
   // Show c3.js chart
   chart.load({columns: plots});
 }
-
-
-
-
 
 // BlueJelly.onRead handler
 function onRead(data, uuid) {
@@ -156,6 +182,8 @@ function stopNotify() {
 // onload event handler
 window.addEventListener("load", function() {
   document.getElementById("bt_start_not").style.display = "block";
+  document.getElementById('bt_start_not').setAttribute("disabled", true);
+  document.getElementById("bt_start_not").style.color = "Gray";
   document.getElementById("bt_stop_not").style.display = "none";
 
   // Initialize c3.js chart
