@@ -120,45 +120,82 @@ function start_trans_mrb(bt, file) {
 //  bt:   Instance of BlueJelly
 function setup_plato_uuid(bt) {
   // Beacon Service: 24620100-1f7e-4adb-936a-ba3687e99b18
-  // 0201: Proximity UUID
+  // 0101: Proximity UUID
   bt.setUUID("Proximity",  "24620100-1f7e-4adb-936a-ba3687e99b18", "24620101-1f7e-4adb-936a-ba3687e99b18");
-  // 0202: Major
+  // 0102: Major
   bt.setUUID("Major",      "24620100-1f7e-4adb-936a-ba3687e99b18", "24620102-1f7e-4adb-936a-ba3687e99b18");
-  // 0203: Minor
+  // 0103: Minor
   bt.setUUID("Minor",      "24620100-1f7e-4adb-936a-ba3687e99b18", "24620103-1f7e-4adb-936a-ba3687e99b18");
-  // 0204: Tx Power
+  // 0104: Tx Power
   bt.setUUID("TXPower",    "24620100-1f7e-4adb-936a-ba3687e99b18", "24620104-1f7e-4adb-936a-ba3687e99b18");
-  // 0205: Adv. interval
+  // 0105: Adv. interval
   bt.setUUID("AdvIntr",    "24620100-1f7e-4adb-936a-ba3687e99b18", "24620105-1f7e-4adb-936a-ba3687e99b18");
-  // 0206: Measure Power
+  // 0106: Measure Power
   bt.setUUID("MesPower",   "24620100-1f7e-4adb-936a-ba3687e99b18", "24620106-1f7e-4adb-936a-ba3687e99b18");
-  // 0207: Regisger
+  // 0107: Regisger
   bt.setUUID("Register",   "24620100-1f7e-4adb-936a-ba3687e99b18", "24620107-1f7e-4adb-936a-ba3687e99b18");
 
   // Data Service: 24620200-1f7e-4adb-936a-ba3687e99b18
-  // Data Write
+  // 0201: Data Write
   bt.setUUID("DataWrite",  "24620200-1f7e-4adb-936a-ba3687e99b18", "24620201-1f7e-4adb-936a-ba3687e99b18");
-  // Data Notify
+  // 0202: Data Notify
   bt.setUUID("DataNotify", "24620200-1f7e-4adb-936a-ba3687e99b18", "24620202-1f7e-4adb-936a-ba3687e99b18");
 
   // Device Information Service: 24620300-1f7e-4adb-936a-ba3687e99b18
-  // Device ID
+  // 0301: Device ID
   bt.setUUID("DeviceID",   "24620300-1f7e-4adb-936a-ba3687e99b18", "24620301-1f7e-4adb-936a-ba3687e99b18");
-  // Firmware Version
+  // 0302: Firmware Version
   bt.setUUID("FWVer",      "24620300-1f7e-4adb-936a-ba3687e99b18", "24620302-1f7e-4adb-936a-ba3687e99b18");
 
-  // mruby Service
-  // WRITE_APP
+  // mruby Service: 24625200-1f7e-4adb-936a-ba3687e99b18
+  // 5204: WRITE_APP
   bt.setUUID("WriteApp",   "24625200-1f7e-4adb-936a-ba3687e99b18", "24625204-1f7e-4adb-936a-ba3687e99b18");
+}
+
+function setup_plato_bridge_uuid(bt) {
+  // LoRa Setting Service: 3c020100-121c-4fa0-b78e-debdf5514cc6
+  // 0101: OTAA Enable
+  bt.setUUID("OTAAEnable",  "3c020100-121c-4fa0-b78e-debdf5514cc6", "3c020101-121c-4fa0-b78e-debdf5514cc6");
+  // 0102: DevEUI
+  bt.setUUID("DevEUI",      "3c020100-121c-4fa0-b78e-debdf5514cc6", "3c020102-121c-4fa0-b78e-debdf5514cc6");
+  // 0103: AppEUI
+  bt.setUUID("AppEUI",      "3c020100-121c-4fa0-b78e-debdf5514cc6", "3c020103-121c-4fa0-b78e-debdf5514cc6");
+  // 0104: AppKey
+  bt.setUUID("AppKey",      "3c020100-121c-4fa0-b78e-debdf5514cc6", "3c020104-121c-4fa0-b78e-debdf5514cc6");
+  // 0105: DevAddr
+  bt.setUUID("DevAddr",     "3c020100-121c-4fa0-b78e-debdf5514cc6", "3c020105-121c-4fa0-b78e-debdf5514cc6");
+  // 0106: AppsKey
+  bt.setUUID("AppsKey",     "3c020100-121c-4fa0-b78e-debdf5514cc6", "3c020106-121c-4fa0-b78e-debdf5514cc6");
+  // 0107: NWKSKey
+  bt.setUUID("NWKSKey",     "3c020100-121c-4fa0-b78e-debdf5514cc6", "3c020107-121c-4fa0-b78e-debdf5514cc6");
+  // 0108: Uplink Test
+  bt.setUUID("Uplink",      "3c020100-121c-4fa0-b78e-debdf5514cc6", "3c020108-121c-4fa0-b78e-debdf5514cc6");
+  // 0109: Join State
+  bt.setUUID("JoinState",   "3c020100-121c-4fa0-b78e-debdf5514cc6", "3c020109-121c-4fa0-b78e-debdf5514cc6");
+  // 010A: Downlink Test
+  bt.setUUID("Downlink",    "3c020100-121c-4fa0-b78e-debdf5514cc6", "3c02010a-121c-4fa0-b78e-debdf5514cc6");
+  // 010B: Parameter Write
+  bt.setUUID("ParaWrite",   "3c020100-121c-4fa0-b78e-debdf5514cc6", "3c02010b-121c-4fa0-b78e-debdf5514cc6");
+
+  // Device Information Service: 3c020300-121c-4fa0-b78e-debdf5514cc6
+  // 0301: Device ID
+  bt.setUUID("DeviceID",   "3c020300-121c-4fa0-b78e-debdf5514cc6", "3c020301-121c-4fa0-b78e-debdf5514cc6");
+  // 0302: Firmware Version
+  bt.setUUID("FWVer",      "3c020300-121c-4fa0-b78e-debdf5514cc6", "3c020302-121c-4fa0-b78e-debdf5514cc6");
+
+  // mruby Service: 3c025200-121c-4fa0-b78e-debdf5514cc6
+  // 5204: WRITE_APP
+  bt.setUUID("WriteApp",   "3c025200-121c-4fa0-b78e-debdf5514cc6", "3c025204-121c-4fa0-b78e-debdf5514cc6");
 }
 
 // setup_bluetooth(bt)
 // Initialize BlueJelly and setup Bluetooth services
 //  bt:   Instance of BlueJelly
 //  ehs:  Event handlers 
-function setup_bluetooth(bt, ehs={}) {
+function setup_bluetooth(bt, ehs={}, setup=setup_plato_uuid) {
   // Set Plato Service UUID
-  setup_plato_uuid(bt);
+  // setup_plato_uuid(bt);
+  setup(bt);
 
   // Add event handlers
   if (ehs.scan) bt.onScan = ehs.scan;

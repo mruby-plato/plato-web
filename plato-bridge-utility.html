@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Plato Bridge Utility</title>
+<script type="text/javascript" src="js/bluejelly.js"></script>
+<script type="text/javascript" src="js/bj-plato.js"></script>
+<script type="text/javascript" src="js/plato-bridge-utility.js"></script>
+<link rel="stylesheet" href="css/plato-utility.css">
+</head>
+<body>
+  <table class="section">
+    <tr>
+      <td>Plato device:</td>
+      <td id="devname">&lt;No selection&gt;</td>
+      <td><button onclick="scanDevice()">Scan</button></td>
+    </tr>
+  </table>
+  <div class="section">
+    LoRa Setting Service:
+    <button onclick="refreshCharacteristics()">Refresh</button>
+    <button onclick="updateCharacteristics()">Register</button>
+    <table>
+      <tr><td>OTAA Enable</td><td><input class="bin1" id="chr_otaa_enable"></td></tr>
+      <tr><td>DevEUI</td><td><input class="bin8" id="chr_dev_eui"></td></tr>
+      <tr><td>AppEUI</td><td><input class="bin8" id="chr_app_eui"></td></tr>
+      <tr><td>AppKey</td><td><input class="bin16" id="chr_app_key"></td></tr>
+      <tr><td>Dev Addr</td><td><input class="bin4" id="chr_dev_addr"></td></tr>
+      <tr><td>Apps Key</td><td><input class="bin16" id="chr_apps_key"></td></tr>
+      <tr><td>NWKS Key</td><td><input class="bin16" id="chr_nwks_key"></td></tr>
+      <tr><td>Uplink Test</td><td><input class="bin20" id="chr_uplink"></td></tr>
+      <tr><td>Join State</td><td id="chr_join_state"></td></tr>
+      <tr><td>Downlink Test</td><td id="chr_downlink"></td></tr>
+    </table>
+  </div>
+  <div class="section">
+    Device Information Service:
+    <table>
+      <tr><td>Device ID</td><td id="chr_devid"></td></td></tr>
+      <tr><td>FW Version</td><td id="chr_fwver"></td></td></tr>
+    </table>
+  </div>
+  <div class="section">
+    mruby Service:
+    <button id="bt_ledon" onclick="ledon()">LED ON</button>
+    <button id="bt_ledoff" onclick="ledoff()">LED OFF</button>
+  </div>
+</body>
+</html>

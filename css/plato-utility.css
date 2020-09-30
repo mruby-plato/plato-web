@@ -4,8 +4,17 @@
 .bin2 {
   width: 3em;
 }
+.bin4 {
+  width: 6em;
+}
+.bin8 {
+  width: 12em;
+}
 .bin16 {
   width: 24em;
+}
+.bin20 {
+  width: 30em;
 }
 
 .section {
