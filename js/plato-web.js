@@ -40,6 +40,7 @@ function scanDevice() {
 
   // return (bt.scanByNamePrefix('Plato'))
   return (bt.scanWithOptions(options))
+  .then( () => {return ble.write("Register", [0x02]);})
   .then( () => {
     console.log("connectGATT : Major");
     return bt.connectGATT('Major');
