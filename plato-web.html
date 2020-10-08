@@ -29,7 +29,7 @@
     <tr id="bt9"></tr>
   </table>
   <div>
-    <button id="bt_scan" onclick="scanDevice()">Scan</button>
+    <button id="bt_scan" onclick="scanDevice()">Scan Plato devices</button>
   </div>
   <div class="appbin_select">
     <input type="file" class="appbin_select_input" id="fl_appbin">
@@ -38,67 +38,6 @@
   </div>
   <div>
     <button id="bt_wrtapp" onclick="writeAppl()">Deploy</button>
-  </div>
-</div>
-
-<div id="text1">Hello, Plato!</div>
-<div id="devname">&lt;device&gt;</div>
-<div>
-  iBeacon Service
-  <button id="bt_proximity">Proximity UUID</button>
-  <button id="bt_major">Major</button>
-  <button id="bt_minor">Minor</button>
-  <button id="bt_txpwr">TX Power</button>
-  <button id="bt_advint">Adv. Interval</button>
-  <button id="bt_mespwr">Measure Power</button>
-  <button id="bt_regi">Register</button>
-</div>
-<div>
-  Data Service
-  <button id="button1">Start read</button>
-  <button id="button2">Stop read</button>
-</div>
-
-<div>
-  Device Information Service
-  <button id="bt_devid">Device ID</button>
-  <button id="bt_fwver">FW Version</button>
-</div>
-
-<div>
-  mruby Service
-  <button id="bt_ledon">LED ON</button>
-  <button id="bt_ledoff">LED OFF</button>
-</div>
-
-<div>
-  Write Test
-  <input type="text" id="InpProximity" size="32">
-  <button id="bt_wrtpro">Write Proximity UUID</button>
-</div>
-
-<div>
-  Binary Transfer Test
-  <input type="file" id="selmrb">
-  <pre id="bin"></pre>
-</div>
-
-<div>
-  Scan sample
-  <div>
-    Peripheral name:
-    <input type="text" id="target_name">
-    <button id="wbt_scanname" onclick="ble.scanByName(document.getElementById('target_name').value);">scanByName() test</button>
-  </div>
-  <div>
-    Peripheral name prefix:
-    <input type="text" id="target_name_prefix">
-    <button id="wbt_scanpre" onclick="ble.scanByNamePrefix(document.getElementById('target_name_prefix').value);">scanByNamePrefix() test</button>
-  </div>
-  <div>
-    Pripheral service UUID:
-    <input type="text" id="target_uuid">
-    <button id="wbt_scanuuid" onclick="ble.scanByUUID(document.getElementById('target_uuid').value);">scanByUUID() test</button>
   </div>
 </div>
 </body>
