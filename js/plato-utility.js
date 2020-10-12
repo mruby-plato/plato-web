@@ -230,6 +230,57 @@ function ledoff() {
   document.getElementById("bt_ledoff").style.display = "none";
 }
 
+function led_write(rgb) {
+  ble.write("DataWrite", [0x1e, 0x00, 0x00, 0x00, rgb]);
+}
+
+var ledval = 0;
+
+// LED(R) on
+function led_r_on() {
+  ledval |= 0x04;
+  led_write(ledval);
+  document.getElementById("bt_led_r_on").style.display = "none";
+  document.getElementById("bt_led_r_off").style.display = "block";
+}
+// LED(R) off
+function led_r_off() {
+  ledval &= ~0x04;
+  led_write(ledval);
+  document.getElementById("bt_led_r_on").style.display = "block";
+  document.getElementById("bt_led_r_off").style.display = "none";
+}
+
+// LED(G) on
+function led_g_on() {
+  ledval |= 0x02;
+  led_write(ledval);
+  document.getElementById("bt_led_g_on").style.display = "none";
+  document.getElementById("bt_led_g_off").style.display = "block";
+}
+// LED(G) off
+function led_g_off() {
+  ledval &= ~0x02;
+  led_write(ledval);
+  document.getElementById("bt_led_g_on").style.display = "block";
+  document.getElementById("bt_led_g_off").style.display = "none";
+}
+
+// LED(B) on
+function led_b_on() {
+  ledval |= 0x08;
+  led_write(ledval);
+  document.getElementById("bt_led_b_on").style.display = "none";
+  document.getElementById("bt_led_b_off").style.display = "block";
+}
+// LED(B) off
+function led_b_off() {
+  ledval &= ~0x08;
+  led_write(ledval);
+  document.getElementById("bt_led_b_on").style.display = "block";
+  document.getElementById("bt_led_b_off").style.display = "none";
+}
+
 // Update all characteristics
 function updateCharacteristics() {
   for (var i=0; i<charKeys.length; i++) {
@@ -244,8 +295,14 @@ function updateCharacteristics() {
 
 // onload event handler
 window.addEventListener("load", function() {
-  document.getElementById("bt_ledon").style.display = "block";
-  document.getElementById("bt_ledoff").style.display = "none";
+  // document.getElementById("bt_ledon").style.display = "block";
+  // document.getElementById("bt_ledoff").style.display = "none";
+  document.getElementById("bt_led_r_on").style.display = "block";
+  document.getElementById("bt_led_r_off").style.display = "none";
+  document.getElementById("bt_led_g_on").style.display = "block";
+  document.getElementById("bt_led_g_off").style.display = "none";
+  document.getElementById("bt_led_b_on").style.display = "block";
+  document.getElementById("bt_led_b_off").style.display = "none";
   document.getElementById("bt_start_not").style.display = "block";
   document.getElementById("bt_stop_not").style.display = "none";
 });
