@@ -95,7 +95,7 @@ function load_appbin(file) {
     // initialize sequence number
     wrtseq = 0;
     mrbbin = new Uint8Array(mrbreader.result);
-    document.getElementById("load_status").innerText = "loaded.";
+    document.getElementById("load_status").innerText += " loaded.";
   }
   mrbreader.readAsArrayBuffer(file);
 }

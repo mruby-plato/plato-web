@@ -17,3 +17,79 @@ label:hover {
   opacity: 1.0;
   transition: 0.3s ease-out;
 }
+
+.capt_cont {
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+li {
+  font-size: 20px;
+}
+
+/* button */
+.plt_btn {
+  position: relative;
+  display: block;
+  width: 180px;
+  padding: 0.8em;
+  text-align: center;
+  font-weight: bold;
+  text-decoration: none;
+  color: #FFF;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.0);
+  background: #808080;
+  transition: .4s;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.plt_btn:hover {
+  text-shadow: -6px 0px 15px rgba(255, 255, 240, 0.83), 6px 0px 15px rgba(255, 255, 240, 0.83);
+  transition: .4s;
+}
+
+table {
+  border-collapse: collapse;
+  padding: 0;
+  width: 600px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  box-shadow: 0 0 15px -6px #00000073;
+}
+table th:first-child {
+  border-radius: 6px 0 0 0;
+}
+table th:last-child {
+  border-radius: 0 6px 0 0;
+
+}
+table tr {
+  background-color: #fff;
+}
+table th,
+table td {
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+table  th {
+  width: 20%;
+  padding: 10px 0;
+  font-size: 16px;
+  padding: 10px;
+  background-color: #0762ff;
+  color:#fff;
+}
+table tr{
+  text-align: center;
+  width: 16%;
+  padding: 20px 0;
+  background-color: #eeeeee;
+  color:#3a3a3a;
+}
+
+.nodev {
+  font-size: 16px;
+  color: gray;
+  margin-top: 8px;
+  margin-bottom: 16px;
+}

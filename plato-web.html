@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Plato Web Tool</title>
+<title>Plato Application Transfer Tool</title>
 <script type="text/javascript" src="js/bluejelly.js"></script>
 <script type="text/javascript" src="js/bj-plato.js"></script>
 <script type="text/javascript" src="js/plato-web.js"></script>
@@ -10,35 +10,46 @@
 </head>
 <body>
 <div>
-  Plato devices:
-  <table>
-    <tr>
-      <th>Device name</th>
-      <th>ID</th>
-      <th>Status</th>
-    </tr>
-    <tr id="bt0"></tr>
-    <tr id="bt1"></tr>
-    <tr id="bt2"></tr>
-    <tr id="bt3"></tr>
-    <tr id="bt4"></tr>
-    <tr id="bt5"></tr>
-    <tr id="bt6"></tr>
-    <tr id="bt7"></tr>
-    <tr id="bt8"></tr>
-    <tr id="bt9"></tr>
-  </table>
-  <div>
-    <button id="bt_scan" onclick="scanDevice()">Scan Plato devices</button>
-  </div>
-  <div class="appbin_select">
-    <input type="file" class="appbin_select_input" id="fl_appbin">
-    <label for="fl_appbin">Select appl. binary</label>
-    <div id="load_status"></div>
-  </div>
-  <div>
-    <button id="bt_wrtapp" onclick="writeAppl()">Deploy</button>
-  </div>
+  <h1>Plato Application Transfer Tool</h1>
+  <ol>
+    <li>Select plato device(s) to application download</li>
+    <div class="capt_cont">
+      <div id="nodev" class="nodev">No device selected.</div>
+      <div id="seldevs" hidden>
+        Selected Plato device(s):
+        <table>
+          <tr>
+            <th>Device name</th>
+            <th>ID</th>
+            <th>Status</th>
+          </tr>
+          <tr id="bt0"></tr>
+          <tr id="bt1"></tr>
+          <tr id="bt2"></tr>
+          <tr id="bt3"></tr>
+          <tr id="bt4"></tr>
+          <tr id="bt5"></tr>
+          <tr id="bt6"></tr>
+          <tr id="bt7"></tr>
+          <tr id="bt8"></tr>
+          <tr id="bt9"></tr>
+        </table>
+      </div>
+      <label class="plt_btn" id="bt_scan" onclick="scanDevice()">Scan Plato device</label>
+    </div>
+    <li>Load application binary</li>
+    <div class="capt_cont">
+      <div class="nodev" id="load_status"></div>
+      <div class="appbin_select">
+        <input type="file" class="appbin_select_input" id="fl_appbin">
+        <label class="plt_btn" for="fl_appbin">Select appl. binary</label>
+      </div>
+    </div>
+    <li>Deploy application</li>
+    <div class="capt_cont">
+      <label class="plt_btn" id="bt_wrtapp" onclick="writeAppl()">Deploy</label>
+    </div>
+  </ol>
 </div>
 </body>
 </html>

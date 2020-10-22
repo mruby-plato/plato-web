@@ -102,6 +102,9 @@ function onScan(deviceName) {
   html = "<td>" + deviceName + "</td>";
   html += "<td id=\"btid" + idx + "\">Reading...</td><td id=\"btsts" + idx + "\"></td>"
   document.getElementById('bt'+idx).innerHTML = html;
+
+  document.getElementById("nodev").style.display = "none";
+  document.getElementById("seldevs").style.display = "block";
 }
 
 // BlueJelly.onRead handler
@@ -160,6 +163,11 @@ window.addEventListener("load", function() {
       alert("No file selected.");
       return;
     }
-    load_appbin(input.files[0]);
+    let file = input.files[0];
+    document.getElementById("load_status").innerText = '"' + file.name + '"';
+    load_appbin(file);
   })
+
+  document.getElementById("nodev").style.display = "block";
+  document.getElementById("seldevs").style.display = "none";
 });
