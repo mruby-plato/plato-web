@@ -293,6 +293,27 @@ function updateCharacteristics() {
   ble.write("Register", [0x01]);
 }
 
+// Change password
+function changePassword() {
+  let oldpw = document.getElementById("old_password").value;
+  let newpw = document.getElementById("new_password").value;
+  let cnfpw = document.getElementById("confirm_password").value;
+  if (newpw != cnfpw) {
+    alert("New password does not match confirmation.");
+  }
+  oldpw = "\x0a" + oldpw + "\0";
+  newpw = "\x08" + newpw + "\0";
+  let oldpwary = str2Uint8Array(oldpw);
+  let newpwary = str2Uint8Array(newpw);
+
+  return (ble.write("WriteApp", oldpwary))
+  .then ( () => {return ble.write("WriteApp", newpwary);})
+  .catch(error => {
+    console.log('Error : ' + error);
+    this.onError(error);
+  })
+}
+
 // onload event handler
 window.addEventListener("load", function() {
   // document.getElementById("bt_ledon").style.display = "block";

@@ -10,6 +10,13 @@ const mrb_chunk_start = 3;
 const mrb_chunk_size = 16;
 const mrb_write_delay = 1;  // 1ms
 
+// Convert string to Uint8 array
+function str2Uint8Array(str) {
+  let binaryArray = new Uint8Array(str.length)
+  Array.prototype.forEach.call(binaryArray, function (el, idx, arr) { arr[idx] = str.charCodeAt(idx) })
+  return binaryArray
+}
+
 // trans_mrb(bt, seq)
 // Transfer mrb chunk
 //  bt:   Instance of BlueJelly
