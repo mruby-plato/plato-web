@@ -36,11 +36,28 @@
       <tr><td>FW Version</td><td id="chr_fwver"></td></td></tr>
     </table>
   </div>
-  <!-- <div class="section">
+  <div class="section">
     mruby Service:
-    <button id="bt_ledon" onclick="ledon()">LED ON</button>
-    <button id="bt_ledoff" onclick="ledoff()">LED OFF</button>
-  </div> -->
+    <!-- <button id="bt_ledon" onclick="ledon()">LED ON</button> -->
+    <!-- <button id="bt_ledoff" onclick="ledoff()">LED OFF</button> -->
+    <div>
+      <table>
+        <tr>
+          <td>Old password:</td>
+          <td><input type="password" id="old_password"></td>
+        </tr>
+        <tr>
+          <td>New password:</td>
+          <td><input type="password" id="new_password"></td>
+        </tr>
+        <tr>
+          <td>Confirm password:</td>
+          <td><input type="password" id="confirm_password"></td>
+          <td><button id="bt_chgpw" onclick="changePassword()">Change password</button></td>
+        </tr>
+      </table>
+    </div>
+  </div>
   <div class="section">
     LED control:
     <button id="bt_led_r_on" onclick="led_r_on()">LED(R) ON</button>
