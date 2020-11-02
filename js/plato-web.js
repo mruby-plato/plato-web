@@ -146,6 +146,15 @@ function onWrite(uuid) {
 
 // onload event handler
 window.addEventListener("load", function() {
+  var lang = (window.navigator.languages && window.navigator.languages[0]) ||
+    window.navigator.language ||
+    window.navigator.userLanguage ||
+    window.navigator.browserLanguage;
+  var pagelang = window.location.href.substr(-7, 2);
+  if (lang == "ja" && pagelang != "ja") {
+    window.location = "plato-web-ja.html";
+  }
+
   // Init BlueJelly
   setup_bluetooth(ble);
 

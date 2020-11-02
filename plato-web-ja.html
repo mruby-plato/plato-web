@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Platoアプリケーション転送</title>
+<script type="text/javascript" src="js/bluejelly.js"></script>
+<script type="text/javascript" src="js/bj-plato.js"></script>
+<script type="text/javascript" src="js/plato-web.js"></script>
+<link rel="stylesheet" href="css/plato-web.css">
+</head>
+<body>
+<div>
+  <h1>Platoアプリケーション転送</h1>
+  <ol>
+    <li>アプリケーションを転送するPlatoデバイスを選択します</li>
+    <div class="capt_cont">
+      <div id="nodev" class="nodev">デバイスが選択されていません</div>
+      <div id="seldevs" hidden>
+        選択済みPlatoデバイス:
+        <table>
+          <tr>
+            <th>デバイス名</th>
+            <th>ID</th>
+            <th>状態</th>
+          </tr>
+          <tr id="bt0"></tr>
+          <tr id="bt1"></tr>
+          <tr id="bt2"></tr>
+          <tr id="bt3"></tr>
+          <tr id="bt4"></tr>
+          <tr id="bt5"></tr>
+          <tr id="bt6"></tr>
+          <tr id="bt7"></tr>
+          <tr id="bt8"></tr>
+          <tr id="bt9"></tr>
+        </table>
+      </div>
+      <label class="plt_btn" id="bt_scan" onclick="scanDevice()">Platoデバイスの検索</label>
+    </div>
+    <li>アプリケーションバイナリを読み込みます</li>
+    <div class="capt_cont">
+      <div class="nodev" id="load_status"></div>
+      <div class="appbin_select">
+        <input type="file" class="appbin_select_input" id="fl_appbin">
+        <label class="plt_btn" for="fl_appbin">バイナリファイル選択</label>
+      </div>
+    </div>
+    <li>アプリケーションを転送します</li>
+    <div class="capt_cont">
+      <label class="plt_btn" id="bt_wrtapp" onclick="writeAppl()">転送</label>
+    </div>
+  </ol>
+</div>
+</body>
+</html>
