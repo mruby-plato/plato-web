@@ -27,7 +27,7 @@ function readCharacteristics(bt) {
   };
 
   return (bt.scanWithOptions(options))
-  .then( () => {return ble.write("Register", [0x02]);})
+  .then( () => {return bt.write("Register", [0x02]);})
   .then( () => {return bt.connectGATT('Proximity');} )
   .then( () => {return bt.dataCharacteristic.readValue();} )
   .then( () => {return bt.connectGATT('Major');} )
