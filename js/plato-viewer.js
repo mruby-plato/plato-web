@@ -1,22 +1,49 @@
 // Constants
-const points = [];
+
+// Data typpes
+const DT_ANGLE  = 0x02;
+const DT_TEMP   = 0x04;
+const DT_HUMI   = 0x05;
+const DT_PRES   = 0x06;
+const DT_ILLU   = 0x07;
+const DT_VIBR   = 0x15;
+
+const datatypes = [];
+datatypes[DT_ANGLE] = {color: '#22ff88', min: -180, max: 180};
+datatypes[DT_TEMP]  = {color: '#ff6622', min: 5, max: 40};
+datatypes[DT_HUMI]  = {color: '#2222ff', min: 0, max: 100};
+datatypes[DT_PRES]  = {color: '#88ccff', min: 850, max: 1050};
+datatypes[DT_ILLU]  = {color: '#eecc22', min: 0, max: 1000};
+datatypes[DT_VIBR]  = {color: '#444444', min: 0, max: 1};
+
+// Data type for show graph
+const showtypes = [DT_TEMP, DT_HUMI];
 
 // Initialize constant
-points[0x04] = {
+const points = [];
+points[DT_ANGLE] = {
+  y: {name: 'Angle', data: []},
+  x: {name: 'Time2', data: []}
+};
+points[DT_TEMP] = {
   y: {name: 'Temperature', data: []},
   x: {name: 'Time4', data: []}
 };
-points[0x05] = {
+points[DT_HUMI] = {
   y: {name: 'Humidity', data: []},
   x: {name: 'Time5', data: []}
 };
-points[0x06] = {
+points[DT_PRES] = {
   y: {name: 'Air pressure', data: []},
   x: {name: 'Time6', data: []}
 };
-points[0x07] = {
+points[DT_ILLU] = {
   y: {name: 'Illuminance', data: []},
   x: {name: 'Time7', data: []}
+};
+points[DT_VIBR] = {
+  y: {name: 'Vibration', data: []},
+  x: {name: 'Time15', data: []}
 };
 
 // Global variables
@@ -110,13 +137,25 @@ function plotData(data) {
   // var typeid = "";
   var dval = 0;
   switch (dtype) {
-    case 0x04:  // Temperature
-      // typeid = "Temperature";
+    case DT_ANGLE:  // Angle
+      // dval = roundPrecision(data.getFloat32(4, true), 1);   // X
+      // dval = roundPrecision(data.getFloat32(8, true), 1);   // Y
+      dval = roundPrecision(data.getFloat32(12, true), 1);  // Z
+      break;
+    case DT_TEMP:   // Temperature
       dval = roundPrecision(data.getFloat32(4, true), 1);
       break;
-    case 0x05:  // Humidity
-      // typeid = "Humidity";
+    case DT_HUMI:   // Humidity
       dval = roundPrecision(data.getFloat32(4, true), 1);
+      break;
+    case DT_PRES:   // Air pressure
+      dval = roundPrecision(data.getFloat32(4, true), 1);
+      break;
+    case DT_ILLU:   // Illuminance
+      dval = roundPrecision(data.getFloat32(4, true), 1);
+      break;
+    case DT_VIBR:   // Vibration
+      dval = data.getUint16(4, 1) >> 15;
       break;
     default:
       break;
@@ -159,6 +198,7 @@ function plotData(data) {
     }
   }
 
+  // Draw graph
   var plots = [];
   // for (var dt in points) {
   //   var line = Array.from(points[dt]);
@@ -166,10 +206,11 @@ function plotData(data) {
   //   plots.push(line);
   // }
   for (let i in points) {
-    if (points[i].x.data.length == 0) continue;   // Skip when data empty
+    if (!showtypes.includes(parseInt(i))) continue; // Skip hide data type
+    if (points[i].x.data.length == 0) continue;     // Skip when data empty
     for (let dt in points[i]) {
-      var line = Array.from(points[i][dt].data);  // Set data (cloned)
-      line.splice(0, 0, points[i][dt].name);      // Set title of axis
+      var line = Array.from(points[i][dt].data);    // Set data (cloned)
+      line.splice(0, 0, points[i][dt].name);        // Set title of axis
       plots.push(line);
     }
   }
@@ -211,30 +252,31 @@ function stopNotify() {
   document.getElementById("bt_stop_not").style.display = "none";
 }
 
-// onload event handler
-window.addEventListener("load", function() {
-  document.getElementById("bt_start_not").style.display = "block";
-  document.getElementById('bt_start_not').setAttribute("disabled", true);
-  document.getElementById("bt_start_not").style.color = "Gray";
-  document.getElementById("bt_stop_not").style.display = "none";
+// Setup graph
+function setupGraph() {
+  ptl = points[showtypes[0]];
+  ptr = points[showtypes[1]];
+  dtl = datatypes[showtypes[0]];
+  dtr = datatypes[showtypes[1]];
+
+  var _xs = [];
+  _xs[ptl.y.name] = ptl.x.name;
+  _xs[ptr.y.name] = ptr.x.name;
+  var _axisr = [];
+  _axisr[ptr.y.name] = 'y2';
+  var _colors = [];
+  _colors[ptl.y.name] = dtl.color;
+  _colors[ptr.y.name] = dtr.color;
 
   // Initialize c3.js chart
   chart = c3.generate({
     bindto: '#chart',
     data: {
-      xs: {
-        'Temperature': 'Time4',
-        'Humidity': 'Time5'
-      },
+      xs: _xs,
       columns: [
       ],
-      axes: {
-        'Humidity': 'y2'
-      },
-      colors: {
-        'Temperature': '#ff8822',
-        'Humidity': '#2222ff'
-      }
+      axes: _axisr,
+      colors: _colors
     },
     axis: {
       x: {
@@ -244,22 +286,46 @@ window.addEventListener("load", function() {
         }
       },
       y: {
-        min: 5,
-        max: 40,
+        min: dtl.min,
+        max: dtl.max,
         label: {
-          text: 'Temperature',
+          text: ptl.y.name,
           position: 'outer-middle'
         }
       },
       y2: {
         show: true,
-        min: 0,
-        max: 100,
+        min: dtr.min,
+        max: dtr.max,
         label: {
-          text: 'Humidity',
+          text: ptr.y.name,
           position: 'outer-middle'
         }
       }
     }
   });
+}
+
+// Change show data
+function changeLeftData(event) {
+  showtypes[0] = parseInt(event.currentTarget.value);
+  setupGraph();
+}
+function changeRightData(event) {
+  showtypes[1] = parseInt(event.currentTarget.value);
+  setupGraph();
+}
+
+// onload event handler
+window.addEventListener("load", function() {
+  document.getElementById("bt_start_not").style.display = "block";
+  document.getElementById('bt_start_not').setAttribute("disabled", true);
+  document.getElementById("bt_start_not").style.color = "Gray";
+  document.getElementById("bt_stop_not").style.display = "none";
+
+  document.getElementById("datatype_l").addEventListener('change', changeLeftData);
+  document.getElementById("datatype_r").addEventListener('change', changeRightData);
+
+  // setup graph
+  setupGraph();
 });

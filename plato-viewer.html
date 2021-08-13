@@ -50,8 +50,28 @@
     <button id="bt_stop_not" onclick="stopNotify()">Stop notification</button>
   </div>
 
-  <div id="chart"></div>
+  <div class="datatype">
+    <div>
+      <select id="datatype_l">
+        <option value="4" selected>Temperature</option>
+        <option value="5">Humidity</option>
+        <option value="6">Air pressure</option>
+        <option value="2">Angle</option>
+        <option value="21">Vibration</option>
+      </select>
+    </div>
+    <div>
+      <select id="datatype_r">
+        <option value="4">Temperature</option>
+        <option value="5" selected>Humidity</option>
+        <option value="6">Air pressure</option>
+        <option value="2">Angle</option>
+        <option value="21">Vibration</option>
+      </select>
+    </div>
+  </div>
 
+  <div id="chart"></div>
 <script>
 // var chart = c3.generate({
 //   bindto: '#chart',
