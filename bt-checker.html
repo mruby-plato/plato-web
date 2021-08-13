@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>BT Checker</title>
+<script type="text/javascript" src="js/bluejelly.js"></script>
+<script type="text/javascript" src="js/bj-plato.js"></script>
+<script type="text/javascript" src="js/plato-utility.js"></script>
+<link rel="stylesheet" href="css/plato-utility.css">
+</head>
+<body>
+  <table class="section">
+    <tr>
+      <td>Plato device:</td>
+      <td id="devname">&lt;No selection&gt;</td>
+      <td><button onclick="scanDevice()">Scan</button></td>
+    </tr>
+  </table>
+  <div class="section" hidden>
+    iBeacon Service:
+    <button onclick="refreshCharacteristics()">Refresh</button>
+    <button onclick="updateCharacteristics()">Register</button>
+    <table>
+      <tr><td>Proximity UUID</td><td><input class="bin16" id="chr_proximity"></td></tr>
+      <tr><td>Major</td><td><input class="bin1" id="chr_major"></td></tr>
+      <tr><td>Minor</td><td><input class="bin2" id="chr_minor"></td></tr>
+      <tr><td>TX Power</td><td><input class="bin1" id="chr_txpow"></td></tr>
+      <tr><td>Advertise Interval</td><td><input class="bin2" id="chr_advint"></td></tr>
+      <tr><td>Measured Power</td><td><input class="bin1" id="chr_mespow"></td></tr>
+    </table>
+  </div>
+  <div class="section">
+    <!-- Device Information Service: -->
+    <table>
+      <tr><td>Device ID</td><td id="chr_devid"></td></td></tr>
+      <tr><td>FW Version</td><td id="chr_fwver"></td></td></tr>
+    </table>
+  </div>
+  <div class="section" hidden>
+    mruby Service:
+    <!-- <button id="bt_ledon" onclick="ledon()">LED ON</button> -->
+    <!-- <button id="bt_ledoff" onclick="ledoff()">LED OFF</button> -->
+    <div>
+      <table>
+        <tr>
+          <td>Old password:</td>
+          <td><input type="password" id="old_password"></td>
+        </tr>
+        <tr>
+          <td>New password:</td>
+          <td><input type="password" id="new_password"></td>
+        </tr>
+        <tr>
+          <td>Confirm password:</td>
+          <td><input type="password" id="confirm_password"></td>
+          <td><button id="bt_chgpw" onclick="changePassword()">Change password</button></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="section" hidden>
+    LED control:
+    <button id="bt_led_r_on" onclick="led_r_on()">LED(R) ON</button>
+    <button id="bt_led_r_off" onclick="led_r_off()">LED(R) OFF</button>
+    <button id="bt_led_g_on" onclick="led_g_on()">LED(G) ON</button>
+    <button id="bt_led_g_off" onclick="led_g_off()">LED(G) OFF</button>
+    <button id="bt_led_b_on" onclick="led_b_on()">LED(B) ON</button>
+    <button id="bt_led_b_off" onclick="led_b_off()">LED(B) OFF</button>
+  </div>
+  <div class="section" hidden>
+    Data Service:
+    <button id="bt_start_not" onclick="startNotify()">Start notification</button>
+    <button id="bt_stop_not" onclick="stopNotify()">Stop notification</button>
+    <table id="tbl_data"><tr><th>Date time</th><th>Device ID</th><th>Data type</th><th>Values</th></tr></table>
+  </div>
+</body>
+</html>
